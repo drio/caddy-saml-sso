@@ -1,0 +1,23 @@
+(enable_saml) {
+	saml_sso {
+		saml_idp_url https://samltest.id/saml/idp
+		saml_cert_file saml-cert/service.cert
+		saml_key_file saml-cert/service.key
+		saml_root_url https://caddy-saml.magnetux.net
+	}
+}
+
+http://:12000 {
+  handle /ping {
+    respond "pong"
+  }
+
+	handle /* {
+		route /* {
+			import enable_saml
+      respond "ok"
+		}
+	}
+
+}
+
