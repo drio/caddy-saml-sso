@@ -1,7 +1,7 @@
 HOST=$(shell hostname)
 MOD_NAME=caddy-saml-sso
 PRJ_NAME=$(MOD_NAME)
-DOMAIN=caddy-saml.drtufts.net 
+DOMAIN=foo.net
 
 ifeq ($(HOST), air)
 include .env.dev
