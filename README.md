@@ -1,8 +1,6 @@
-![](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?branch=main)
+[](https://github.com/drio/caddy-saml-sso/workflows/go/badge.svg)
 
 # caddy-saml-sso
-
-![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 ![](md/demo.gif)
 
