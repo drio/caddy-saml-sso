@@ -1,5 +1,7 @@
 # caddy-saml-sso
 
+![](demo.gif)
+
 A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) library.
 
 ## Build
