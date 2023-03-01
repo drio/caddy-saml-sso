@@ -2,7 +2,7 @@
 
 ![](md/demo.gif)
 
-A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) library.
+A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) wonderful library.
 
 ## Build
 
