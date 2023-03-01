@@ -1,7 +1,6 @@
 HOST=$(shell hostname)
 MOD_NAME=caddy-saml-sso
 PRJ_NAME=$(MOD_NAME)
-DOMAIN=foo.net
 
 ifeq ($(HOST), air)
 include .env.dev
@@ -12,7 +11,7 @@ dev:
 	xcaddy run
 
 test-env:
-	echo "cookiename=$$COOKIE_NAME"
+	@echo "saml_root_url=$$SAML_ROOT_URL"
 
 build: xcaddy
 	xcaddy build --with github.com/drio/$(MOD_NAME)
@@ -41,3 +40,7 @@ saml-cert:
 		-keyout saml-cert/service.key \
 		-out saml-cert/service.cert \
 		-days 365 -nodes -subj "/CN=$(DOMAIN)"
+
+.PHONY: metadata
+metadata:
+	@curl $$SAML_ROOT_URL/saml/metadata

@@ -93,7 +93,7 @@ func (m *Middleware) Validate() error {
 
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
-	caddy.Log().Sugar().Infof("(saml-sso) serverhttp path=%s", r.URL.Path)
+	caddy.Log().Sugar().Infof("saml-sso middleware path=%s", r.URL.Path)
 
 	// If the request is part of the SAML flow,
 	// handle the request with the SAML library
