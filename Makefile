@@ -16,7 +16,7 @@ test-env:
 build: xcaddy
 	xcaddy build --with github.com/drio/$(MOD_NAME)
 
-xcaddy: 
+xcaddy:
 	go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
 run: caddy Caddyfile
