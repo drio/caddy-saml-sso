@@ -19,6 +19,8 @@ build: xcaddy
 xcaddy:
 	go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
+# This is useful if you want to play with the config file
+# Use caddy reload to make Caddy reload the config
 run: caddy Caddyfile
 	./caddy run ./Caddyfile
 
