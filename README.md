@@ -1,4 +1,4 @@
-[](https://github.com/drio/caddy-saml-sso/workflows/go/badge.svg)
+[latest build](https://github.com/drio/caddy-saml-sso/workflows/go/badge.svg)
 
 # caddy-saml-sso
 
