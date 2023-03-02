@@ -32,10 +32,10 @@ I would suggest you test everything against this [testing SAML IDP](https://saml
 ```Caddy
 (enable_saml) {
   saml_sso {
- 		saml_idp_url   {$SAML_IDP_URL}
-		saml_cert_file {$SAML_CERT_FILE}
-		saml_key_file  {$SAML_KEY_FILE}
-		saml_root_url  {$SAML_ROOT_URL}
+    saml_idp_url   {$SAML_IDP_URL}
+    saml_cert_file {$SAML_CERT_FILE}
+    saml_key_file  {$SAML_KEY_FILE}
+    saml_root_url  {$SAML_ROOT_URL}
   }
 }
 
@@ -70,12 +70,12 @@ server.
 
 ```
 (enable_saml) {
-	saml_sso {
-		saml_idp_url   {$SAML_IDP_URL}
-		saml_cert_file {$SAML_CERT_FILE}
-		saml_key_file  {$SAML_KEY_FILE}
-		saml_root_url  {$SAML_ROOT_URL}
-	}
+  saml_sso {
+    saml_idp_url   {$SAML_IDP_URL}
+    saml_cert_file {$SAML_CERT_FILE}
+    saml_key_file  {$SAML_KEY_FILE}
+    saml_root_url  {$SAML_ROOT_URL}
+  }
 }
 
 http://:12000 {
@@ -83,17 +83,17 @@ http://:12000 {
     respond "pong"
   }
 
-	handle /* {
-		route /* {
-			import enable_saml
+  handle /* {
+    route /* {
+      import enable_saml
 
       reverse_proxy /* saml-app:8182 {
         header_up email {http.response.header.mail}
         header_up displayname {http.response.header.displayname}
       }
 
-		}
-	}
+    }
+  }
 }
 ```
 
