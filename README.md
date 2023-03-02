@@ -4,6 +4,9 @@
 
 A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) wonderful library.
 
+When enabling this module on your routes, if the SAML flow is successful, you will have all the SAML attributes in the header so your
+application can access them.
+
 ## Build
 
 `make build` will caddy with the plugin.
