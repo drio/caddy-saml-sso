@@ -84,7 +84,7 @@ func (m *Middleware) Provision(ctx caddy.Context) error {
 	nullHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
 	m.SamlHandler = samlSP.RequireAccount(nullHandler)
 
-	log("loaded")
+	log("loaded saml_sso v%s", version)
 	return nil
 }
 
@@ -110,13 +110,11 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 
 		// Let's grab the SAML session attributes and add them to the header
 		// so other services can use it
-		log("listing attributes")
 		attributes, err := m.extractAttributes(r)
 		if attributes != nil && err == nil {
 			log("number of attributes=%d", len(attributes))
 			for k, v := range attributes {
 				if len(v) == 1 {
-					log("%s=%s", k, v[0])
 					if w.Header().Get(k) == "" {
 						w.Header().Add(k, v[0])
 					}
@@ -125,6 +123,7 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 		} else {
 			log("attributes=%v err=%s", attributes, err)
 		}
+		log("saml_sso v%s middlware done", version)
 		return next.ServeHTTP(w, r)
 	}
 }
@@ -188,8 +187,7 @@ func (m *Middleware) extractAttributes(r *http.Request) (samlsp.Attributes, erro
 }
 
 func log(msg string, args ...interface{}) {
-	template := fmt.Sprintf("saml_sso [v%s]; %s", version, msg)
-	caddy.Log().Sugar().Infof(template, args)
+	caddy.Log().Sugar().Infof(msg, args)
 }
 
 // Interface guards
