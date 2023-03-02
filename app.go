@@ -82,7 +82,7 @@ func (m *Middleware) Provision(ctx caddy.Context) error {
 	nullHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
 	m.SamlHandler = samlSP.RequireAccount(nullHandler)
 
-	caddy.Log().Sugar().Infof("(saml-sso) loaded")
+	log("loaded")
 	return nil
 }
 
@@ -94,7 +94,7 @@ func (m *Middleware) Validate() error {
 
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
-	caddy.Log().Sugar().Infof("saml-sso middleware path=%s", r.URL.Path)
+	log("middleware path=%s", r.URL.Path)
 
 	// If the request is part of the SAML flow,
 	// handle the request with the SAML library
@@ -108,20 +108,20 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 
 		// Let's grab the SAML session attributes and add them to the header
 		// so other services can use it
-		caddy.Log().Sugar().Info("(saml_sso); listing attributes")
+		log("listing attributes")
 		attributes, err := m.extractAttributes(r)
 		if attributes != nil && err == nil {
-			caddy.Log().Sugar().Infof(">> (saml_sso); # of attributes=%d", len(attributes))
+			log("number of attributes=%d", len(attributes))
 			for k, v := range attributes {
 				if len(v) == 1 {
-					caddy.Log().Sugar().Infof("(saml_sso); %s=%s", k, v[0])
+					log("%s=%s", k, v[0])
 					if w.Header().Get(k) == "" {
 						w.Header().Add(k, v[0])
 					}
 				}
 			}
 		} else {
-			caddy.Log().Sugar().Infof("(saml_sso); attributes=%v err=%s", attributes, err)
+			log("attributes=%v err=%s", attributes, err)
 		}
 		return next.ServeHTTP(w, r)
 	}
@@ -157,7 +157,7 @@ func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 			m.SamlRootUrl = args[0]
 		default:
 			//d.Err("Unknow cam parameter: " + parameter)
-			caddy.Log().Sugar().Info("(saml_sso); skipping: %s %v", parameter, args)
+			log("skipping: %s %v", parameter, args)
 		}
 	}
 	return nil
@@ -183,6 +183,11 @@ func (m *Middleware) extractAttributes(r *http.Request) (samlsp.Attributes, erro
 	}
 
 	return jwtSessionClaims.Attributes, nil
+}
+
+func log(msg string, args ...interface{}) {
+	template := fmt.Sprintf("(saml_sso); %s", msg)
+	caddy.Log().Sugar().Infof(template, args)
 }
 
 // Interface guards
