@@ -4,8 +4,20 @@
 
 A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) wonderful library.
 
+Just write your app behind Caddy with the module enabled and Caddy will proxy the request to your app only if
+the user has a valid SAML session.
+
 When enabling this module on your routes, if the SAML flow is successful, you will have all the SAML attributes in the header so your
 application can access them.
+
+## Process to use it.
+
+1. We want the caddy server with this module enabled (see build).
+2. Use the .env.dev to setup the details of your SAML idp.
+3. Run caddy using the Caddyfile as a reference. Test the root path to make sure all works correctly.
+
+You also can run all this within docker: one container for Caddy another one for your application.
+See [docker-compose.yml](docker-compose.yml) for more details.
 
 ## Build
 
