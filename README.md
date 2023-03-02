@@ -19,6 +19,8 @@ application can access them.
 You also can run all this within docker: one container for Caddy another one for your application.
 See [docker-compose.yml](docker-compose.yml) for more details.
 
+I would suggest you test everything against this [testing SAML IDP](https://samltest.id/).
+
 ## Build
 
 `make build` will caddy with the plugin.
