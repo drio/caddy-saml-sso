@@ -5,6 +5,7 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -97,13 +98,31 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 
 	// If the request is part of the SAML flow,
 	// handle the request with the SAML library
-	// else, before going down the middleware stack, make sure
-	// we are in a SAML session
 	if strings.HasPrefix(r.URL.Path, "/saml") {
 		m.SamlSP.ServeHTTP(w, r)
 		return nil
 	} else {
+		// before going down the middleware stack, make sure
+		// we are in a SAML session
 		m.SamlHandler.ServeHTTP(w, r)
+
+		// Let's grab the SAML session attributes and add them to the header
+		// so other services can use it
+		caddy.Log().Sugar().Info("(saml_sso); listing attributes")
+		attributes, err := m.extractAttributes(r)
+		if attributes != nil && err == nil {
+			caddy.Log().Sugar().Infof(">> (saml_sso); # of attributes=%d", len(attributes))
+			for k, v := range attributes {
+				if len(v) == 1 {
+					caddy.Log().Sugar().Infof("(saml_sso); %s=%s", k, v[0])
+					if w.Header().Get(k) == "" {
+						w.Header().Add(k, v[0])
+					}
+				}
+			}
+		} else {
+			caddy.Log().Sugar().Infof("(saml_sso); attributes=%v err=%s", attributes, err)
+		}
 		return next.ServeHTTP(w, r)
 	}
 }
@@ -149,6 +168,21 @@ func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error)
 	var m Middleware
 	err := m.UnmarshalCaddyfile(h.Dispenser)
 	return m, err
+}
+
+func (m *Middleware) extractAttributes(r *http.Request) (samlsp.Attributes, error) {
+	session, _ := m.SamlSP.Session.GetSession(r)
+	if session == nil {
+		return nil, nil
+	}
+
+	r = r.WithContext(samlsp.ContextWithSession(r.Context(), session))
+	jwtSessionClaims, ok := session.(samlsp.JWTSessionClaims)
+	if !ok {
+		return nil, fmt.Errorf("Unable to decode session into JWTSessionClaims")
+	}
+
+	return jwtSessionClaims.Attributes, nil
 }
 
 // Interface guards
