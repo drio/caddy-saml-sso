@@ -66,6 +66,39 @@ If all goes well, caddy will continue with the next middleware, in this case we
 send an "ok" back. Here you probably want to redirect all traffic to your app
 server.
 
+## Caddyfile example (proxy requests to app)
+
+```
+(enable_saml) {
+	saml_sso {
+		saml_idp_url   {$SAML_IDP_URL}
+		saml_cert_file {$SAML_CERT_FILE}
+		saml_key_file  {$SAML_KEY_FILE}
+		saml_root_url  {$SAML_ROOT_URL}
+	}
+}
+
+http://:12000 {
+  handle /ping {
+    respond "pong"
+  }
+
+	handle /* {
+		route /* {
+			import enable_saml
+
+      reverse_proxy /* saml-app:8182 {
+        header_up email {http.response.header.mail}
+        header_up displayname {http.response.header.displayname}
+      }
+
+		}
+	}
+}
+```
+
+Same as before, but we now proxy the request to a process.
+
 ## Testing
 
 If you want to test locally I suggest you use the [samltest idp](https://samltest.id/).
