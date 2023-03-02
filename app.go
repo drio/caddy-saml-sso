@@ -17,6 +17,8 @@ import (
 	"github.com/crewjam/saml/samlsp"
 )
 
+const version = "0.0.1"
+
 func init() {
 	caddy.RegisterModule(Middleware{})
 	httpcaddyfile.RegisterHandlerDirective("saml_sso", parseCaddyfile)
@@ -186,7 +188,7 @@ func (m *Middleware) extractAttributes(r *http.Request) (samlsp.Attributes, erro
 }
 
 func log(msg string, args ...interface{}) {
-	template := fmt.Sprintf("(saml_sso); %s", msg)
+	template := fmt.Sprintf("saml_sso [v%s]; %s", version, msg)
 	caddy.Log().Sugar().Infof(template, args)
 }
 
