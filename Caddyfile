@@ -15,10 +15,20 @@ http://:12000 {
 	handle /* {
 		route /* {
 			import enable_saml
+
+      # Respond back to the user printing some of the SAML attributes
       header Content-Type text/html
       respond `<center>
       <p> {http.response.header.displayname} ({http.response.header.mail}), you are authenticated now.</p>
       </center>`
+
+      # Same example but proxy the request to an app
+      # reverse_proxy /* localhost:8182 {
+      #   header_up email {http.response.header.mail}
+      #   header_up displayname {http.response.header.displayname}
+      # }
+
 		}
 	}
 }
+
