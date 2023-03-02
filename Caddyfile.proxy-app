@@ -1,27 +1,25 @@
 (enable_saml) {
 	saml_sso {
-		saml_idp_url   {$SAML_IDP_URL}
+		saml_idp_url {$SAML_IDP_URL}
 		saml_cert_file {$SAML_CERT_FILE}
-		saml_key_file  {$SAML_KEY_FILE}
-		saml_root_url  {$SAML_ROOT_URL}
+		saml_key_file {$SAML_KEY_FILE}
+		saml_root_url {$SAML_ROOT_URL}
 	}
 }
 
 http://:12000 {
-  handle /ping {
-    respond "pong"
-  }
+	handle /ping {
+		respond "pong"
+	}
 
 	handle /* {
 		route /* {
 			import enable_saml
 
-      reverse_proxy /* saml-app:8182 {
-        header_up email {http.response.header.mail}
-        header_up displayname {http.response.header.displayname}
-      }
-
+			reverse_proxy /* saml-app:8182 {
+				header_up email {http.response.header.mail}
+				header_up displayname {http.response.header.displayname}
+			}
 		}
 	}
 }
-

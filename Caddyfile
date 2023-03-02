@@ -1,27 +1,26 @@
 (enable_saml) {
 	saml_sso {
-		saml_idp_url   {$SAML_IDP_URL}
+		saml_idp_url {$SAML_IDP_URL}
 		saml_cert_file {$SAML_CERT_FILE}
-		saml_key_file  {$SAML_KEY_FILE}
-		saml_root_url  {$SAML_ROOT_URL}
+		saml_key_file {$SAML_KEY_FILE}
+		saml_root_url {$SAML_ROOT_URL}
 	}
 }
 
 http://:12000 {
-  handle /ping {
-    respond "pong"
-  }
+	handle /ping {
+		respond "pong"
+	}
 
 	handle /* {
 		route /* {
 			import enable_saml
 
-      # Respond back to the user printing some of the SAML attributes
-      header Content-Type text/html
-      respond `<center>
-      <p> {http.response.header.displayname} ({http.response.header.mail}), you are authenticated now.</p>
-      </center>`
+			# Respond back to the user printing some of the SAML attributes
+			header Content-Type text/html
+			respond `<center>
+			<p> {http.response.header.displayname} ({http.response.header.mail}), you are authenticated now.</p>
+			</center>`
 		}
 	}
 }
-
