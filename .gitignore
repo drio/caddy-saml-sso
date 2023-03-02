@@ -8,3 +8,4 @@ saml-cert
 node_modules
 *.vim
 .env*
+caddy.amd64

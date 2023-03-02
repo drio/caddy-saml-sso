@@ -16,6 +16,9 @@ test-env:
 build: xcaddy
 	xcaddy build --with github.com/drio/$(MOD_NAME)
 
+caddy.amd64:
+	GOARCH=amd64 GOOS=linux xcaddy build --with github.com/drio/$(MOD_NAME) --output $@
+
 xcaddy:
 	go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
@@ -25,7 +28,7 @@ run: caddy Caddyfile
 	./caddy run ./Caddyfile
 
 clean:
-	rm -f caddy
+	rm -f caddy caddy.amd64
 
 .PHONY: test single-run-test lint
 test:
