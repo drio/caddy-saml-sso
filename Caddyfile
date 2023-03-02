@@ -15,7 +15,10 @@ http://:12000 {
 	handle /* {
 		route /* {
 			import enable_saml
-      respond "you are authenticated now"
+      header Content-Type text/html
+      respond `<center>
+      <p> {http.response.header.displayname} ({http.response.header.mail}), you are authenticated now.</p>
+      </center>`
 		}
 	}
 }
