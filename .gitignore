@@ -9,3 +9,4 @@ node_modules
 *.vim
 .env*
 caddy.amd64
+caddy.*
