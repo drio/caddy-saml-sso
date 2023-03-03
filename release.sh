@@ -8,7 +8,6 @@ echo $current
 echo -ne "Enter new version: "
 read new_version
 
-
 (
 cat <<EOF
 package caddy_saml_sso
