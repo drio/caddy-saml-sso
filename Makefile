@@ -1,6 +1,7 @@
 HOST=$(shell hostname)
 MOD_NAME=caddy-saml-sso
 PRJ_NAME=$(MOD_NAME)
+BINS=caddy.arm64.osx caddy.amd64.linux
 
 ifeq ($(HOST), air)
 include .env.dev
@@ -14,7 +15,7 @@ test-env:
 	@echo "saml_root_url=$$SAML_ROOT_URL"
 
 .PHONY: build-all
-build-all: caddy.arm64.osx caddy.amd64.linux
+build-all: $(BINS)
 
 caddy.arm64.osx: xcaddy
 	xcaddy build --with github.com/drio/$(MOD_NAME) --output $@
@@ -34,7 +35,7 @@ run: caddy Caddyfile
 	./caddy run ./Caddyfile
 
 clean:
-	rm -f caddy caddy.a*
+	rm -f caddy $(BINS)
 
 .PHONY: test single-run-test lint
 test:
