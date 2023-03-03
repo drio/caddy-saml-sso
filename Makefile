@@ -77,3 +77,7 @@ docker/run:
 		-v ./Caddyfile:/etc/caddy/Caddyfile \
 		ghcr.io/drio/caddy-saml-sso:$(VERSION) \
 		/usr/bin/caddy run --config=/etc/caddy/Caddyfile
+
+release:
+	./release.sh
+	make docker/publish
