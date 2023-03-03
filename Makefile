@@ -34,7 +34,7 @@ run: caddy Caddyfile
 	./caddy run ./Caddyfile
 
 clean:
-	rm -f caddy caddy.amd64
+	rm -f caddy caddy.a*
 
 .PHONY: test single-run-test lint
 test:
