@@ -22,8 +22,6 @@ git tag "v$new_version"
 git push origin
 git push origin v$new_version
 
-rm -f caddy.*
 make release
 
-gh release create v$new_version
-gh release upload caddy.a*
+gh release create v0.0.2 --notes "v$version" ./caddy.*

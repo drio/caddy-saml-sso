@@ -13,13 +13,17 @@ dev:
 test-env:
 	@echo "saml_root_url=$$SAML_ROOT_URL"
 
-release: caddy.arm64.osx caddy.amd64.linux
+.PHONY: build-all
+build-all: caddy.arm64.osx caddy.amd64.linux
 
 caddy.arm64.osx: xcaddy
 	xcaddy build --with github.com/drio/$(MOD_NAME) --output $@
 
 caddy.amd64.linux:
 	GOARCH=amd64 GOOS=linux xcaddy build --with github.com/drio/$(MOD_NAME) --output $@
+
+caddy.amd64.windows:
+	GOARCH=amd64 GOOS=windows xcaddy build --with github.com/drio/$(MOD_NAME) --output $@
 
 xcaddy:
 	go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
