@@ -1,7 +1,7 @@
 HOST=$(shell hostname)
 MOD_NAME=caddy-saml-sso
 PRJ_NAME=$(MOD_NAME)
-BINS=caddy.arm64.osx caddy.amd64.linux
+BINS=caddy.arm64.osx caddy.amd64.linux caddy.amd64.windows
 
 ifeq ($(HOST), air)
 include .env.dev

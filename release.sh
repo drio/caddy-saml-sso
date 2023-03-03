@@ -24,4 +24,6 @@ git push origin v$new_version
 
 make clean build-all
 
-gh release create v0.0.2 --notes "v$version" ./caddy.*
+gh release create v$new_version --notes "v$new_version" ./caddy.*
+
+notify "New release completed 🚀"
