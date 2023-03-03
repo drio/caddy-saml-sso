@@ -3,6 +3,8 @@ MOD_NAME=caddy-saml-sso
 PRJ_NAME=$(MOD_NAME)
 BINS=caddy.arm64.osx caddy.amd64.linux caddy.amd64.windows
 
+VERSION=$(shell cat version.go | tail -1| awk -F\" '{print $$2}')
+
 ifeq ($(HOST), air)
 include .env.dev
 export $(shell sed 's/=.*//' .env.dev)
@@ -58,13 +60,20 @@ saml-cert:
 metadata:
 	@curl $$SAML_ROOT_URL/saml/metadata
 
-#	version=`cat version.go | tail -1| awk -F\" '{print $$2}'`;
 docker/login:
 	export CR_PAT=`cat ./.gh-token`;\
 	echo $$CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 
 docker/build:
-		docker build -t ghcr.io/drio/caddy-saml-sso:latest .
+	docker build -t ghcr.io/drio/caddy-saml-sso:$(VERSION) .
 
-docker/publish:
-		docker push ghcr.io/drio/caddy-saml-sso:latest
+docker/publish: docker/build
+	docker push ghcr.io/drio/caddy-saml-sso:$(VERSION)
+
+docker/run:
+	docker run -p 12000:12000 \
+		--env-file=.env.dev \
+		-v ./saml-cert:/saml-cert \
+		-v ./Caddyfile:/etc/caddy/Caddyfile \
+		ghcr.io/drio/caddy-saml-sso:$(VERSION) \
+		/usr/bin/caddy run --config=/etc/caddy/Caddyfile
