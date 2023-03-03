@@ -57,3 +57,14 @@ saml-cert:
 .PHONY: metadata
 metadata:
 	@curl $$SAML_ROOT_URL/saml/metadata
+
+#	version=`cat version.go | tail -1| awk -F\" '{print $$2}'`;
+docker/login:
+	export CR_PAT=`cat ./.gh-token`;\
+	echo $$CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+
+docker/build:
+		docker build -t ghcr.io/drio/caddy-saml-sso:latest .
+
+docker/publish:
+		docker push ghcr.io/drio/caddy-saml-sso:latest
