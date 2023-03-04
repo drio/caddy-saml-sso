@@ -81,3 +81,6 @@ docker/run:
 release:
 	./release.sh
 	make docker/publish
+
+tunnel/%:
+	./scripts/$*-tunnel.sh
