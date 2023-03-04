@@ -10,3 +10,4 @@ node_modules
 .env*
 caddy.amd64
 caddy.*
+./scripts/*tunnel*
