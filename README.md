@@ -30,6 +30,11 @@ I would suggest you test everything against this [testing SAML IDP](https://saml
 ## Caddyfile example
 
 ```Caddy
+{
+	order saml_sso before header
+	order saml_sso before respond
+}
+
 (enable_saml) {
   saml_sso {
     saml_idp_url   {$SAML_IDP_URL}
@@ -45,10 +50,8 @@ https://foo.bar.net:12000 {
   }
 
   handle /* {
-    route /* {
-      import enable_saml
-      respond "you are authenticated now."
-    }
+    import enable_saml
+    respond "you are authenticated now."
   }
 }
 ```
@@ -69,6 +72,11 @@ server.
 ## Caddyfile example (proxy requests to app)
 
 ```
+{
+	order saml_sso before header
+	order saml_sso before respond
+}
+
 (enable_saml) {
   saml_sso {
     saml_idp_url   {$SAML_IDP_URL}
@@ -84,14 +92,11 @@ http://:12000 {
   }
 
   handle /* {
-    route /* {
-      import enable_saml
+    import enable_saml
 
-      reverse_proxy /* saml-app:8182 {
-        header_up email {http.response.header.mail}
-        header_up displayname {http.response.header.displayname}
-      }
-
+    reverse_proxy /* saml-app:8182 {
+      header_up email {http.response.header.mail}
+      header_up displayname {http.response.header.displayname}
     }
   }
 }
