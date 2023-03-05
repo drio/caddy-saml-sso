@@ -17,12 +17,10 @@ http://:12000 {
 		respond "pong"
 	}
 
-	handle /* {
-		import enable_saml
+	import enable_saml
 
-		reverse_proxy /* saml-app:8182 {
-			header_up email {http.response.header.mail}
-			header_up displayname {http.response.header.displayname}
-		}
+	reverse_proxy / saml-app:8182 {
+		header_up email {http.response.header.mail}
+		header_up displayname {http.response.header.displayname}
 	}
 }
