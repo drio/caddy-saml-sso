@@ -1,6 +1,5 @@
 {
 	order saml_sso before header
-	order saml_sso before respond
 }
 
 (enable_saml) {
@@ -19,7 +18,7 @@ http://:12000 {
 
 	import enable_saml
 
-	reverse_proxy / saml-app:8182 {
+	reverse_proxy saml-app:8182 {
 		header_up email {http.response.header.mail}
 		header_up displayname {http.response.header.displayname}
 	}

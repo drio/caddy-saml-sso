@@ -1,6 +1,5 @@
 {
 	order saml_sso before header
-	order saml_sso before respond
 }
 
 (enable_saml) {

@@ -33,7 +33,6 @@ I would suggest you test everything against this [testing SAML IDP](https://saml
 # https://caddyserver.com/docs/caddyfile/options#order
 {
 	order saml_sso before header
-	order saml_sso before respond
 }
 
 (enable_saml) {
@@ -74,7 +73,6 @@ server.
 # https://caddyserver.com/docs/caddyfile/options#order
 {
 	order saml_sso before header
-	order saml_sso before respond
 }
 
 (enable_saml) {
@@ -93,7 +91,7 @@ http://:12000 {
 
   import enable_saml
 
-  reverse_proxy / saml-app:8182 {
+  reverse_proxy saml-app:8182 {
     # https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
     header_up email {http.response.header.mail}
     header_up displayname {http.response.header.displayname}
