@@ -50,10 +50,8 @@ https://foo.bar.net:12000 {
     respond "pong"
   }
 
-  handle /* {
-    import enable_saml
-    respond "you are authenticated now."
-  }
+  import enable_saml
+  respond "you are authenticated now."
 }
 ```
 
@@ -93,14 +91,12 @@ http://:12000 {
     respond "pong"
   }
 
-  handle /* {
-    import enable_saml
+  import enable_saml
 
-    reverse_proxy /* saml-app:8182 {
-      # https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
-      header_up email {http.response.header.mail}
-      header_up displayname {http.response.header.displayname}
-    }
+  reverse_proxy / saml-app:8182 {
+    # https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
+    header_up email {http.response.header.mail}
+    header_up displayname {http.response.header.displayname}
   }
 }
 ```
