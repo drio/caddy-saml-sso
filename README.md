@@ -1,5 +1,5 @@
 <p align="center">
-  <h2>caddy-saml-sso (a caddy plugin for SAML SSO)</h2> 
+  <h2 align="center">caddy-saml-sso (a caddy plugin for SAML SSO)</h2> 
   <img src="md/saml-for-the.png" width="600px" alt="saml for the befuddled"/>
 </p>
 
