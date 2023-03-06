@@ -1,8 +1,8 @@
 # caddy-saml-sso
 
-<center>
-<img src="md/saml-for-the.png" width="600px"/>
-</center>
+<p align="center">
+  <img src="md/saml-for-the.png" width="600px" alt="saml for the befuddled"/>
+</p>
 
 A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) wonderful library.
 
