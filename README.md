@@ -1,6 +1,6 @@
 <p align="center">
   <h2 align="center">caddy-saml-sso (a caddy plugin for SAML SSO)</h2> 
-  <img src="md/saml-for-the.png" width="600px" alt="saml for the befuddled"/>
+  <img align="center" src="md/saml-for-the.png" width="600px" alt="saml for the befuddled"/>
 </p>
 
 A caddy module that provides SSO via SAML. For the SAML implementation we use [this](https://github.com/crewjam/saml) wonderful library.
