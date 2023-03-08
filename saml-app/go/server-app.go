@@ -8,8 +8,8 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		displayname := r.Header.Get("displayname")
-		fmt.Fprintf(w, fmt.Sprintf("You are authenticated: [%s]\n", displayname))
+		cn := r.Header.Get("cn")
+		fmt.Fprintf(w, fmt.Sprintf("You are authenticated: [%s]\n", cn))
 	})
 
 	port := 8182

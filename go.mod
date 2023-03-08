@@ -94,6 +94,7 @@ require (
 	github.com/tailscale/tscert v0.0.0-20230124224810-c6dc1f4049b2 // indirect
 	github.com/urfave/cli v1.22.12 // indirect
 	github.com/yuin/goldmark v1.5.4 // indirect
+	github.com/zenazn/goji v1.0.1 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.mozilla.org/pkcs7 v0.0.0-20210826202110-33d05740a352 // indirect
 	go.step.sm/cli-utils v0.7.5 // indirect
