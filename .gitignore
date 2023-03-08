@@ -12,3 +12,4 @@ caddy.amd64
 caddy.*
 ./scripts/*tunnel*
 Caddyfile.proxy-local
+README.local.md
