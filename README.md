@@ -11,6 +11,9 @@ the user has a valid SAML session.
 When enabling this module on your routes, if the SAML flow is successful, you will have all the SAML attributes in the header so your
 application can access them.
 
+⚠️ Warning: SAML is a [notoriously difficult](https://workos.com/blog/fun-with-saml-sso-vulnerabilities-and-footguns)
+to implement right and prone to serious implementation mistakes. Please use this code with caution.
+
 ## Process to use it.
 
 1. We want the caddy server with this module enabled (see build).
