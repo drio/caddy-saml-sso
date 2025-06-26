@@ -23,7 +23,8 @@ to implement right and prone to serious implementation mistakes. Please use this
 You also can run all this within docker: one container for Caddy another one for your application.
 See [docker-compose.yml](docker-compose.yml) for more details.
 
-I would suggest you test everything against this [testing SAML IDP](https://samltest.id/).
+We need a SAML IDP for testing. I have used ~~[testing SAML IDP](https://samltest.id/)~~ in the past
+but it is now a parked domain. You'll have to find an alternative. Please reach out if you find one.
 
 ## Build
 
@@ -107,7 +108,7 @@ Same as before, but we now proxy the request to a process.
 
 ## Testing
 
-If you want to test locally I suggest you use the [samltest idp](https://samltest.id/).
+You'll need a SAML IDP for testing this.
 
 1. If you are running the server (caddy) in your local machine you are
    going to have some kind of [tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps)
@@ -116,7 +117,7 @@ If you want to test locally I suggest you use the [samltest idp](https://samltes
 2. Create a .env.dev in the root of the project with:
 
 ```sh
-SAML_IDP_URL=https://samltest.id/saml/idp
+SAML_IDP_URL=https://theipd/saml/idp
 SAML_CERT_FILE=saml-cert/service.cert
 SAML_KEY_FILE=saml-cert/service.key
 SAML_ROOT_URL=https://caddy-saml.mydomain.net
@@ -131,7 +132,7 @@ You probably only want to change the last two values.
 $ make metadata > /save/here.xml
 ```
 
-4. Head over [samltest.id](https://samltest.id/) and upload your metadata.
+4. Upload your metadata to the IDP.
    Now you have established the trust between your SP and the IDP.
 
 5. Fire up your browser and point it to: `$(SAML_ROOT_URL)`. If all goes well
